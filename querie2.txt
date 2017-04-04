@@ -1,0 +1,17 @@
+--b) Top 5 stars involved in more movies from USA.
+
+--count
+-- then
+--rank
+SELECT DISTINCT actors
+FROM players
+JOIN movies
+WHERE (country = 'usa')
+
+
+SELECT COUNT(movie_title)
+FROM casts
+WHERE (country = 'usa')
+GROUP BY actors
+RANK
+TOP 
