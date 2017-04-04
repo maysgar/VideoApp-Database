@@ -1,0 +1,18 @@
+--Alphabetical list (by surname, name) of all clients with active contract in the date when the query is
+-- run, along with start and end dates and type (PPC/PPV) of the contract.
+
+SELECT DISTINCT surname, name, startdate, enddate, type 
+FROM clients, contracts 
+WHERE (CLIENTS.clientId = CONTRACTS.clientId) AND (sysdate >= startdate) AND (sysdate < enddate) 
+JOIN products 
+ON (CLIENTS.clientId = PRODUCTS.type) 
+ORDER BY surname, name;
+------------------------------------------------------------------------------------------------------------
+
+SELECT DISTINCT surname, name, startdate, enddate, type 
+FROM clients 
+JOIN contracts 
+ON (CONTRACTS.clientId = CLIENTS.clientId ) AND (sysdate >= startdate) AND (sysdate < enddate)
+JOIN products
+ON (CONTRACTS.contract_type = PRODUCTS.name)
+ORDER BY surname, name;
