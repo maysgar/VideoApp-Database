@@ -1,0 +1,1 @@
+--c) Clients who have bought license for a complete season of any TVseries (include the title and season).
