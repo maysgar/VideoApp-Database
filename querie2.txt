@@ -3,15 +3,10 @@
 --count
 -- then
 --rank
-SELECT DISTINCT actors
-FROM players
-JOIN movies
-WHERE (country = 'usa')
 
-
-SELECT COUNT(movie_title)
+SELECT actors
 FROM casts
 WHERE (country = 'usa')
 GROUP BY actors
-RANK
-TOP 
+ORDER BY COUNT(movie_title) DESC;
+WHERE ROWNUM <= 5;
