@@ -1,2 +1,9 @@
 --d) Top-Star: actor/actress who had got more taps (summing up all the taps of his/her movies) for each
---month (should retrieve a row for each month since the database is on duty). 
+--month (should retrieve a row for each month since the database is on duty).
+
+SELECT actor_name
+FROM casts
+JOIN taps_movies ON (CASTS.title = TAPS_MOVIES.title)
+--WHERE COUNT view_datetime
+GROUP BY actor_name
+ORDER BY COUNT(view_datetime) DESC
