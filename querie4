@@ -2,8 +2,6 @@
 --month (should retrieve a row for each month since the database is on duty).
 
 SELECT actor_name
-FROM casts
-JOIN taps_movies ON (CASTS.title = TAPS_MOVIES.title)
---WHERE COUNT view_datetime
+FROM casts (SELECT COUNT(title) FROM taps_movies GROUP BY TOCHAR( view_datetime, 'MM-YYYY'))
 GROUP BY actor_name
-ORDER BY COUNT(view_datetime) DESC
+--ORDER BY DESC
