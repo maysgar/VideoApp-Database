@@ -4,9 +4,10 @@
 -- then
 --rank
 
-SELECT actors
+SELECT actor
 FROM casts
-WHERE (country = 'usa')
-GROUP BY actors
-ORDER BY COUNT(movie_title) DESC;
+JOIN movies
+ON (MOVIES.movie_title = CASTS.title) AND (country = 'usa')
+GROUP BY actor
+ORDER BY COUNT(title) DESC
 WHERE ROWNUM <= 5;
