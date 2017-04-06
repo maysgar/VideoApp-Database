@@ -9,10 +9,10 @@ ON (CLIENTS.clientId = PRODUCTS.type)
 ORDER BY surname, name;
 ------------------------------------------------------------------------------------------------------------
 
-SELECT DISTINCT surname, name, startdate, enddate, type 
-FROM clients 
-JOIN contracts 
-ON (CONTRACTS.clientId = CLIENTS.clientId ) AND (sysdate >= startdate) AND (sysdate < enddate)
+SELECT surname, name, startdate, enddate, type
+FROM clients
+JOIN contracts
+ON (CLIENTS.clientId = CONTRACTS.clientId) AND (sysdate >= startdate) AND (sysdate <= enddate)
 JOIN products
-ON (CONTRACTS.contract_type = PRODUCTS.name)
+ON (CONTRACTS.contract_type = PRODUCTS.product_name)
 ORDER BY surname, name;
