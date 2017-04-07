@@ -15,15 +15,15 @@ SELECT client, title, season, episode, datetime
 FROM lic_series;
 
 CREATE VIEW unaserie AS
-SELECT client, title, season, episode, COUNT(TEMPORADA.datetime) AS num
+SELECT client, title as title1, season as season1, episode, COUNT(TEMPORADA.datetime) AS num
 FROM temporada
 GROUP BY client, title, season, episode;
 
-CREATE VIEW totalSeason AS
-SELECT client, title, season, episode, num
-FROM series
-JOIN series ON (SERIES.title = UNASERIE.title)
-WHERE num = total_seasons;
+CREATE VIEW totalseason AS
+SELECT client, title1, season1, episode, num
+FROM unaserie
+JOIN seasons ON ((SEASONS.title = UNASERIE.title1) AND (SEASONS.season = UNASERIE.season1))
+WHERE num = episodes;
 
 CREATE VIEW final AS
 SELECT client, title, season
