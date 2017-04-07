@@ -13,3 +13,11 @@ ON (MOVIES.movie_title = CASTS.title) AND (country = 'usa')
 GROUP BY actor
 ORDER BY COUNT(movie_title) DESC;
 --WHERE ROWNUM <= 5;
+
+-----------------------------------------------
+SELECT actor
+FROM casts
+WHERE (COUNT (title) AS num IN (SELECT (movie_title) FROM movies WHERE country='usa'))
+GROUP BY actor
+ORDER BY COUNT (title) DESC
+WHERE ROWNUM <= 5;
