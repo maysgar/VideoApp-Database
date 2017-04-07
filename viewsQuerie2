@@ -1,0 +1,18 @@
+CREATE VIEW joined AS
+SELECT actor, title
+FROM casts
+JOIN movies
+ON (MOVIES.movie_title = CASTS.title);
+
+CREATE VIEW america AS 
+SELECT actor, title
+FROM joined
+WHERE country = 'USA';
+
+
+CREATE VIEW contar AS
+SELECT actor, COUNT(title)
+FROM america 
+GROUP BY actor;
+ORDER BY COUNT(title) DESC;
+CREATE VIEW 
