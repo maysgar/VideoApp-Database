@@ -1,25 +1,33 @@
 SELECT actor
 FROM casts  
 GROUP BY actor
-HAVING COUNT(title) IN (SELECT (movie_title) FROM movies WHERE country= 'usa') 
+HAVING COUNT(title) IN (SELECT (movie_title) FROM movies WHERE country= 'USA') 
 ORDER BY COUNT(title) DESC;
 
-(SELECT movie_title
+CREATE VIEW america AS 
+SELECT movie_title
 FROM movies
-WHERE country = 'usa')
+WHERE country = 'USA';
+
+CREATE VIEW five AS
+SELECT actor
+FROM casts
+JOIN 
+
+
 
 (
 SELECT actor
-FROM CASTS
+FROM casts
 JOIN movies
 ON (MOVIES.movie_title = CASTS.title)
-WHERE (COUNT(movie_title) FROM movies WHERE country = 'usa') AND (ROWNUM <= 5)
+WHERE (country = 'USA') AND (ROWNUM <= 5)
 ORDER BY COUNT(movie_title) DESC;
 
 
 -----------------------------------------------
 SELECT actor
 FROM casts
-WHERE (COUNT (title) IN (SELECT (movie_title) FROM movies WHERE country='usa'))
+WHERE (COUNT (title) IN (SELECT (movie_title) FROM movies WHERE country='USA'))
 GROUP BY actor
 ORDER BY COUNT (title) DESC;
