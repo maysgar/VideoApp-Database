@@ -1,0 +1,15 @@
+SELECT actor
+FROM casts  
+GROUP BY actor
+HAVING COUNT(title) IN (SELECT (movie_title) FROM movies WHERE country= 'usa') 
+ORDER BY COUNT(title) DESC;
+
+
+
+SELECT actor
+FROM casts
+JOIN movies
+ON (MOVIES.movie_title = CASTS.title) AND (country = 'usa')
+GROUP BY actor
+ORDER BY COUNT(movie_title) DESC;
+--WHERE ROWNUM <= 5;
