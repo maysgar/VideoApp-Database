@@ -4,3 +4,11 @@
 SELECT client, title, season
 FROM lic_series 
 WHERE COUNT (episode) = (SELECT episodes FROM seasons)
+
+CREATE VIEW temporada AS
+SELECT client
+FROM lic_series;
+
+CREATE VIEW series AS
+SELECT 
+FROM temporada
