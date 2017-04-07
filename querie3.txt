@@ -1,7 +1,6 @@
 --c) Clients who have bought license for a complete season of any TVseries (include the title and season).
 
 
-SELECT name, surname, title, season
-FROM clients
-JOIN seasons ON 
-WHERE 
+SELECT client, title, season
+FROM lic_series 
+WHERE COUNT (episode) = (SELECT episodes FROM seasons)
