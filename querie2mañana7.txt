@@ -7,11 +7,11 @@ ORDER BY COUNT(title) DESC;
 
 
 SELECT actor
-FROM casts (SELECT movie_title FROM movies WHERE contry = 'usa')
+FROM CASTS
 JOIN movies
 ON (MOVIES.movie_title = CASTS.title)
-WHERE ROWNUM <= 5
-ORDER BY COUNT(movie_title) DESC
+WHERE (COUNT(movie_title) FROM movies WHERE country = 'usa') AND (ROWNUM <= 5)
+ORDER BY COUNT(movie_title) DESC;
 
 
 -----------------------------------------------
