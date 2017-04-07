@@ -1,29 +1,13 @@
---b) Top 5 stars involved in more movies from USA.
-
---count
--- then
---rank
-
+CREATE VIEW limitar AS
 SELECT actor
-FROM casts  --(SELECT COUNT (movie_title) FROM movies WHERE country= 'usa')
+FROM (SELECT actor
+FROM (SELECT actor, COUNT(title) AS cuenta
+FROM (SELECT actor, title
+FROM (SELECT actor, title, country
+FROM casts
 JOIN movies
-ON (MOVIES.movie_title = CASTS.title) AND (country = 'usa')
+ON (MOVIES.movie_title = CASTS.title))
+WHERE country = 'USA')
 GROUP BY actor
-ORDER BY COUNT(title) DESC
+ORDER BY cuenta DESC))
 WHERE ROWNUM <= 5;
-
-
-SELECT actor
-FROM casts  
-WHERE COUNT (title) IN (SELECT (movie_title) FROM movies WHERE country= 'usa') AND (ROWNUM <= 5)
-GROUP BY actor
-ORDER BY COUNT(title) DESC;
-
-
-------------------------------------------ahora mismito
-
-SELECT actor
-FROM casts  
-WHERE COUNT (title) AS num IN (SELECT (movie_title) FROM movies WHERE country= 'usa') 
-GROUP BY actor
-ORDER BY num DESC;
