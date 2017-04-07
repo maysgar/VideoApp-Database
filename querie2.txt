@@ -5,9 +5,25 @@
 --rank
 
 SELECT actor
-FROM casts
+FROM casts  --(SELECT COUNT (movie_title) FROM movies WHERE country= 'usa')
 JOIN movies
 ON (MOVIES.movie_title = CASTS.title) AND (country = 'usa')
 GROUP BY actor
 ORDER BY COUNT(title) DESC
 WHERE ROWNUM <= 5;
+
+
+SELECT actor
+FROM casts  
+WHERE COUNT (title) IN (SELECT (movie_title) FROM movies WHERE country= 'usa') AND (ROWNUM <= 5)
+GROUP BY actor
+ORDER BY COUNT(title) DESC;
+
+
+------------------------------------------ahora mismito
+
+SELECT actor
+FROM casts  
+WHERE COUNT (title) AS num IN (SELECT (movie_title) FROM movies WHERE country= 'usa') 
+GROUP BY actor
+ORDER BY num DESC;
