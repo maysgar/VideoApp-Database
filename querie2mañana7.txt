@@ -17,7 +17,6 @@ ORDER BY COUNT(movie_title) DESC;
 -----------------------------------------------
 SELECT actor
 FROM casts
-WHERE (COUNT (title) AS num IN (SELECT (movie_title) FROM movies WHERE country='usa'))
+WHERE (COUNT (title) IN (SELECT (movie_title) FROM movies WHERE country='usa'))
 GROUP BY actor
-ORDER BY COUNT (title) DESC
-WHERE ROWNUM <= 5;
+ORDER BY COUNT (title) DESC;
