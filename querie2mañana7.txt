@@ -4,8 +4,11 @@ GROUP BY actor
 HAVING COUNT(title) IN (SELECT (movie_title) FROM movies WHERE country= 'usa') 
 ORDER BY COUNT(title) DESC;
 
+(SELECT movie_title
+FROM movies
+WHERE country = 'usa')
 
-
+(
 SELECT actor
 FROM CASTS
 JOIN movies
