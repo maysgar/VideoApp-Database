@@ -15,9 +15,9 @@ SELECT client, title, season, episode, datetime
 FROM lic_series;
 
 CREATE VIEW unaserie AS
-SELECT client, title, season, episode, COUNT(datetime) AS num
+SELECT client, title, season, episode, COUNT(TEMPORADA.datetime) AS num
 FROM temporada
-GROUP BY season, COUNT(datetime);
+GROUP BY client, title, season, episode;
 
 CREATE VIEW totalSeason AS
 SELECT client, title, season, episode, num
