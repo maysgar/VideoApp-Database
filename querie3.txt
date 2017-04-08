@@ -1,0 +1,7 @@
+SELECT client, title1, season1 
+FROM (SELECT client, title1, season1, n_episodes 
+FROM (SELECT client, title AS title1, season AS season1, COUNT(datetime) AS n_episodes 
+FROM lic_series 
+GROUP BY client, title, season;) 
+JOIN seasons ON (title1 = SEASONS.title) AND (season1 = SEASONS.season) AND (n_episodes = episodes) 
+GROUP BY client, title1, season1, n_episodes);
