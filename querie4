@@ -1,7 +1,35 @@
---d) Top-Star: actor/actress who had got more taps (summing up all the taps of his/her movies) for each
+ --d) Top-Star: actor/actress who had got more taps (summing up all the taps of his/her movies) for each
 --month (should retrieve a row for each month since the database is on duty).
 
 SELECT actor_name
 FROM casts (SELECT COUNT(title) FROM taps_movies GROUP BY TOCHAR( view_datetime, 'MM-YYYY'))
 GROUP BY actor_name
 --ORDER BY DESC
+
+
+CREATE VIEW primeroo AS 
+SELECT actor, view_datetime
+FROM casts
+JOIN taps_movies ON (CAST.title = TAPS_MOVIES.title);
+
+CREATE VIEW segundoo AS 
+SELECT actor, view_datetime
+FROM primeroo
+GROUP BY actor, TOCHAR( view_datetime, 'MM-YYYY')
+
+CREATE VIEW terceroo AS
+SELECT actor, COUNT(view_datetime) AS all_datetime
+FROM segundoo
+GROUP BY actor, all_datetime;
+
+CREATE VIEW cuartoo AS  --ordenar meses y taps de mayor a menor
+SELECT actor, all_datetime
+FROM terceroo
+GROUP BY actor, all_datetime
+ORDER BY TOCHAR( view_datetime, 'MM-YYYY'), all_datetime DESC
+
+CREATE VIEW quintoo AS --seleccionar un actor por mes
+SELECT actor 
+FROM cuartoo
+GROUP BY actor, TOCHAR( view_datetime, 'MM-YYYY')
+
