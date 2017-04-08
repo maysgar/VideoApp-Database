@@ -10,14 +10,14 @@ GROUP BY actor_name
 CREATE VIEW primeroo AS 
 SELECT actor, view_datetime
 FROM casts
-JOIN taps_movies ON (CAST.title = TAPS_MOVIES.title);
+JOIN taps_movies ON (CASTS.title = TAPS_MOVIES.title);
 
-CREATE VIEW segundoo AS 
+CREATE VIEW segundoo AS --agrupar taps por cada mes
 SELECT actor, view_datetime
 FROM primeroo
-GROUP BY actor, TOCHAR( view_datetime, 'MM-YYYY')
+GROUP BY actor, TOCHAR( view_datetime, 'MM-YYYY') --invalid identifier en el tochar
 
-CREATE VIEW terceroo AS
+CREATE VIEW terceroo AS --contar numero de taps de cada mes
 SELECT actor, COUNT(view_datetime) AS all_datetime
 FROM segundoo
 GROUP BY actor, all_datetime;
