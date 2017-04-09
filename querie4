@@ -15,18 +15,32 @@ JOIN taps_movies ON (CASTS.title = TAPS_MOVIES.title);
 CREATE VIEW segundoo AS --agrupar taps por cada mes
 SELECT actor, view_datetime
 FROM primeroo
-GROUP BY actor, TOCHAR( view_datetime, 'MM-YYYY') --invalid identifier en el tochar
+GROUP BY actor, TOCHAR( view_datetime, 'MM-YYYY'), view_datetime --invalid identifier en el tochar PRIMERO.view_datetime ?? probar
 
 CREATE VIEW terceroo AS --contar numero de taps de cada mes
 SELECT actor, COUNT(view_datetime) AS all_datetime
 FROM segundoo
-GROUP BY actor, all_datetime;
+GROUP BY actor, TOCHAR( view_datetime, 'MM-YYYY'), all_datetime; --añadido el tochar con el mes
 
 CREATE VIEW cuartoo AS  --ordenar meses y taps de mayor a menor
 SELECT actor, all_datetime
 FROM terceroo
 GROUP BY actor, all_datetime
 ORDER BY TOCHAR( view_datetime, 'MM-YYYY'), all_datetime DESC
+
+
+ CREATE VIEW pruebaa AS   --------------------------------------------------------------------pruebaas
+        SELECT actor Rank() 
+          over (Partition BY Section
+                ORDER BY RankCriteria DESC ) AS Rank
+        FROM terceroo
+        ) rs WHERE Rank <= 1
+
+
+CREATE VIEW prueba2 AS ---------------------------------------------------------------------------mas pruebaas
+SELECT actor 
+FROM pruebaa
+
 
 CREATE VIEW quintoo AS --seleccionar un actor por mes
 SELECT actor 
