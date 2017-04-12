@@ -29,7 +29,7 @@ GROUP BY actor, all_datetime
 ORDER BY TOCHAR( view_datetime, 'MM-YYYY'), all_datetime DESC
 
 
- CREATE VIEW pruebaa AS   --------------------------------------------------------------------pruebaas
+ CREATE VIEW pruebaa AS   ---------------------------------------------------------------------pruebaas
         SELECT actor Rank() 
           over (Partition BY Section
                 ORDER BY RankCriteria DESC ) AS Rank
