@@ -22,13 +22,17 @@ FROM final
 WHERE ROWNUM <= 5;
 
 
+
 CREATE VIEW Bacala AS
 SELECT title
 FROM(SELECT title, COUNT(pct) AS num
 FROM (SELECT title, pct
-FROM taps_movies
-WHERE (pct > 50) AND (pct < 97)
+FROM taps_moviesWHERE (pct > 50) AND (pct < 97)
 GROUP BY title, pct)
-GROUP BY title, num
-ORDER BY num DESC)
-WHERE ROWNUM <= 5;
+GROUP BY titleORDER BY num DESC)
+WHERE ROWNUM <= 5
+ORDER BY num, title;
+
+
+drop view bacala;
+select * from bacala;
