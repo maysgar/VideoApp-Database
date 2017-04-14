@@ -1,0 +1,7 @@
+CREATE VIEW all_movies AS
+SELECT color, director_name, num_critic_for_reviews, duration, director_facebook_likes, gross, genre AS genres, movie_title, num_voted_users, cast_total_facebook_likes, facenumber_in_poster, keyword AS plot_keywords, movie_imdb_link, num_user_for_reviews, filming_language, country, content_rating, budget, title_year, imdb_score, aspect_ratio, movie_facebook_likes, actor AS actor1, facebook_likes AS actor_facebook_likes
+FROM movies
+JOIN casts ON (MOVIES.movie_title = CASTS.title)
+JOIN players ON (CASTS.actor = PLAYERS.actor_name)
+JOIN genres_movies ON (MOVIES.movie_title = GENRES_MOVIES.title)
+JOIN keywords_movies ON (MOVIES.movie_title = KEYWORDS_MOVIES.title);
