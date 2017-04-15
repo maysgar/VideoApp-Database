@@ -1,9 +1,7 @@
-SELECT surname, name, startdate, enddate, type
-FROM (SELECT surname, name, startdate, enddate, contract_type
-FROM (SELECT surname, name, startdate, enddate, contract_type
+SELECT surname, name, startdate, enddate, contract_type
 FROM clients
-JOIN contracts ON (CLIENTS.clientId = CONTRACTS.clientId))
-WHERE ((sysdate >= startdate) AND (sysdate <= enddate)) OR ((sysdate >= startdate) AND (enddate IS NULL)))
+JOIN contracts ON (CLIENTS.clientId = CONTRACTS.clientId)
 JOIN products
 ON (contract_type = PRODUCTS.product_name)
+WHERE ((sysdate >= startdate) AND (sysdate <= enddate)) OR ((sysdate >= startdate) AND (enddate IS NULL))
 ORDER BY surname, name;
