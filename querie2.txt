@@ -1,12 +1,9 @@
-SELECT actor
-FROM (SELECT actor
-FROM (SELECT actor, COUNT(title) AS cuenta
-FROM (SELECT actor, title
-FROM (SELECT actor, title, country
+SELECT actor 
+FROM(SELECT actor
 FROM casts
 JOIN movies
-ON (MOVIES.movie_title = CASTS.title))
-WHERE country = 'USA')
+ON (MOVIES.movie_title = CASTS.title)
+WHERE (country = 'USA') 
 GROUP BY actor
-ORDER BY cuenta DESC))
+ORDER BY COUNT(title) DESC)
 WHERE ROWNUM <= 5;
