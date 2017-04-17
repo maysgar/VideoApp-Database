@@ -1,0 +1,20 @@
+CREATE VIEW all_movies AS
+SELECT color, director_name, num_critic_for_reviews, duration, director_facebook_likes, actor_3_facebook_likes, actor_2_name, actor_1_facebook_likes, gross, genres,
+actor_1_name, movie_title, num_voted_users, cast_total_facebook_likes, actor_3_name, facenumber_in_poster, plot_keywords movie_imdb_link, num_user_for_reviews,
+filming_language, country, content_rating, budget, title_year, actor_2_facebook_likes, imdb_score, aspect_ratio, movie_facebook_likes
+FROM (SELECT SUBSTR(actors_list, 0, (SELECT INSTR(actors_list,',') FROM casts)) AS actor_1_name, --substring to obtain actor1 from the string in done by listagg()
+SUBSTR(actors_list, (SELECT INSTR(actors_list,',',((SELECT INSTR(actors_list,' ') FROM casts)+1),2) FROM casts)) AS actor_2_name,
+SUBSTR(actors_list, (SELECT INSTR(actors_list,',',((SELECT INSTR(actors_list,',',((SELECT INSTR(actors_list,' ') FROM casts)+1),2) FROM casts)+1),3) FROM casts)) AS actor_3_name,
+SUBSTR(fb_likes_list, 0, (SELECT INSTR(fb_likes_list,',') FROM casts)) AS actor_1_facebook_likes,
+SUBSTR(fb_likes_list, (SELECT INSTR(fb_likes_list,',',((SELECT INSTR(fb_likes_list,' ') FROM casts)+1),2) FROM casts)) AS actor_2_facebook_likes,
+SUBSTR(fb_likes_list, (SELECT INSTR(fb_likes_list,',',((SELECT INSTR(fb_likes_list,',',((SELECT INSTR(fb_likes_list,' ') FROM casts)+1),2) FROM casts)+1),3) FROM casts)) AS actor_3_facebook_likes,
+color, director_name, num_critic_for_reviews, duration, director_facebook_likes, gross, genre AS genres, movie_title, num_voted_users, cast_total_facebook_likes, facenumber_in_poster,
+keyword AS plot_keywords, movie_imdb_link, num_user_for_reviews, filming_language, country, content_rating, budget, title_year, imdb_score, aspect_ratio, movie_facebook_likes
+FROM (SELECT title, LISTAGG(actor, ', ') WITHIN GROUP (ORDER BY actor) AS actors_list, LISTAGG(facebook_likes, ', ') WITHIN GROUP (ORDER BY actor) AS fb_likes_list --First listagg() -> huge string with all the actors in each movie | Second listagg() -> huge string with all the facebook likes in each movie 
+FROM (SELECT title, actor
+FROM casts)
+JOIN players ON (actor = PLAYERS.actor_name)
+GROUP BY title)
+JOIN movies ON (title = MOVIES.movie_title)
+JOIN genres_movies ON (movie_title = GENRES_MOVIES.title) 
+JOIN keywords_movies ON (MOVIES.movie_title = KEYWORDS_MOVIES.title));
