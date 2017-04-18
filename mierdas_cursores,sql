@@ -1,22 +1,31 @@
-CREATE TRIGGER non_valid_tap_movies
-BEFORE INSERT OR UPDATE ON taps_movies
+--b) Prevent non-valid visualizations regarding contracts (there cannot be taps in a date out of
+--contract). 
+-- 2 triggers: one for movies and one for series
+
+CREATE  OR REPLACE TRIGGER non_valid_tap_movies BEFORE INSERT OR UPDATE ON taps_movies
 FOR EACH ROW
-DECLARE
-CURSOR c1 IS
-	SELECT enddate INTO end_date
-	 FROM contracts;
-CURSOR c2 IS
-	SELECT startdate INTO start_date
-	FROM contracts;
+	DECLARE
+	CURSOR c1 IS   --end_date taps_movies.enddate%TYPE;
+	SELECT enddate
+	FROM (SELECT enddate
+	FROM contracts
+	JOIN taps_movies ON (CONTRACTS.contractId = TAPS_MOVIES.contractId))
+	WHERE :NEW.view_datetime = view_datetime; --AND enddate IS NOT NULL
+	CURSOR c2 IS
+	SELECT startdate
+	FROM (SELECT startdate
+	FROM contracts
+	JOIN taps_movies ON (CONTRACTS.contractId = TAPS_MOVIES.contractId))
+	WHERE :NEW.view_datetime = view_datetime;
 BEGIN
-open c1;
-open c2;
-IF (:NEW.view_datetime > end_date) OR (:NEW.view_datetime > start_date)
-THEN RAISE bad_date;
+	IF c1 %ISOPEN THEN
+	CLOSE c1;
+	END IF;
+	IF c2 %ISOPEN THEN
+	CLOSE c2;
+	END IF;
+IF (c1 IS NOT NULL) AND ((:NEW.view_datetime > c1) OR (:NEW.view_datetime < c2))
+THEN RAISE RAISE_APPLICATION_ERROR (-20001, 'There cannot be taps in a date out of contract!');
 END IF;
-EXCEPTION
-WHEN bad_date THEN
-DBMS_OUTPUT.PUT_LINE('There cannot be taps in a date out of contract!');
-close c1;
-close c2;
-END;
+END non_valid_tap_movies;
+/
