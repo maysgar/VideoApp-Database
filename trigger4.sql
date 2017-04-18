@@ -9,10 +9,11 @@ FOR UPDATE
 AS
 IF UPDATE(startdate)
 BEGIN
-enddate = (UPDATE(startdate) - 1)
-update contracts set enddate= UPDATE(startdate) - 1 --updated.startdate??? inserted.startdate??
+update contracts set enddate=  DATEADD(day,-1, UPDATE(startdate)) --updated.startdate??? inserted.startdate??
 
-DECLARE
+END;
+
+------------------------------------------------------------------------------------------------------------
 old_contract_type VARCHAR2(50);
 old_startdate DATE;
 old_enddate DATE;
@@ -20,5 +21,3 @@ old_enddate DATE;
 BEGIN
 SELECT contract_type, startdate, enddate INTO old_contract_type, old_startdate, old_enddate FROM contracts
 IF  (there is a new contract) THEN (old_enddate = new_startdate - 1)
-
-END no_overlapping;
