@@ -5,7 +5,6 @@
 CREATE TRIGGER non_valid_visualizations_movies
 BEFORE INSERT OR UPDATE ON taps_movies
 FOR EACH ROW
-BEGIN
 DECLARE end_date DATE;
 	start_date DATE;
         bad_date EXCEPTION;
@@ -25,7 +24,6 @@ END;
 CREATE TRIGGER non_valid_visualizations_series
 BEFORE INSERT OR UPDATE ON taps_series
 FOR EACH ROW
-BEGIN
 DECLARE end_date DATE;
 	start_date DATE;
         bad_date EXCEPTION;
