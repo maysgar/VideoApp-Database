@@ -1,0 +1,20 @@
+CREATE VIEW primeroo AS 
+SELECT actor, view_datetime
+FROM casts
+JOIN taps_movies ON (CASTS.title = TAPS_MOVIES.title);
+
+CREATE VIEW segundoo AS
+SELECT actor, TO_CHAR(view_datetime, 'MM-YYYY') AS month_views
+FROM primeroo
+GROUP BY actor, TO_CHAR(view_datetime, 'MM-YYYY');
+
+CREATE VIEW terceroo AS
+SELECT MAX(actor), month_views
+FROM segundoo
+GROUP BY actor, month_views;
+
+CREATE VIEW cuartoo AS
+SELECT actor, month_views
+FROM terceroo
+GROUP BY actor, month_views
+ORDER BY month_views DESC;
